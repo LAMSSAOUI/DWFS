@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function updateTempsRestant() {
             const minutes = Math.floor(timeRemaining / 60);
             const seconds = timeRemaining % 60;
-            tempsRestantDiv.textContent = `Temps restant :  ${seconds} seconds`;
+            tempsRestantDiv.textContent = ` ${seconds} `;
         }
 
         function startTimer() {
@@ -130,6 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
     startButton.addEventListener('click', function () {
                     console.log('clicked start');
                     document.getElementById('wrapper').style.display = 'block';
+                    document.getElementById('startButton').style.display = 'none';
+                    // document.getElementById('Title').style.display = 'block';
                     displayQuestion()
 
     });
