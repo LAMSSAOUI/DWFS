@@ -87,6 +87,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // display function 
 
     var questionIndex = 0;
+    var stop;
+
+
+    const StopButton = document.getElementById('StopBtn');
+    StopButton.addEventListener('click', function () {
+            console.log('clicked stop'); 
+            stop=true;
+
+    })
+
+    function stopFunc () {
+        if(stop){
+            // .style.display = 'none';
+                cc = document.getElementById('TempsRestant').style.display='none';
+                console.log("time wraper " , cc)
+                
+                container.innerHTML = "<p>Quiz finished!</p>";
+             
+        }
+    }
 
     function displayQuestion() {
         container.innerHTML = questions[questionIndex]._generateHTML();
@@ -101,29 +121,39 @@ document.addEventListener('DOMContentLoaded', function () {
             tempsRestantDiv.textContent = ` ${seconds} `;
         }
 
+
         function startTimer() {
             updateTempsRestant();
             const timerInterval = setInterval(function () {
-                timeRemaining--;
-                updateTempsRestant();
-
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    questionIndex++;
-
-                    // Check if there are more questions
-                    if (questionIndex < questions.length) {
-                        displayQuestion();
-                    } else {
-                        // All questions have been displayed
-                        container.innerHTML = "<p>Quiz finished!</p>";
+                if(!stop){
+                    timeRemaining--;
+                    updateTempsRestant();
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        questionIndex++;
+                        // Check if there are more questions
+                        if (questionIndex < questions.length) {
+                            displayQuestion();
+                        } else {
+                            // All questions have been displayed
+                            stop=true;
+                            // container.innerHTML = "<p>Quiz finished!</p>";
+                        }
                     }
+                } else {    
+                    // ===========there is an issue here is that infinite loop here ============
+                    // ====================================================================
+                    //==================================================================
+                    tempsRestantDiv.style.display = 'none'; // Update this line
+                    console.log("time wrapper hidden"); 
+                    container.innerHTML = "<p>Quiz finished!</p>";
+                    
                 }
+                   
             }, 1000);
-        }
-        
+     }
         startTimer();
-    }
+ }
 
     const startButton = document.getElementById('startButton');
     console.log(startButton); 
@@ -131,9 +161,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log('clicked start');
                     document.getElementById('wrapper').style.display = 'block';
                     document.getElementById('startButton').style.display = 'none';
-                    // document.getElementById('Title').style.display = 'block';
                     displayQuestion()
 
     });
+    
+
 });
 

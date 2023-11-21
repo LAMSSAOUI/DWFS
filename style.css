@@ -74,6 +74,7 @@ button:hover {
     padding: 10px;
 }
 .timeWrapper {
+    display: block;
     margin: auto;
     width: fit-content;
     background-color: #ebf1f8;
