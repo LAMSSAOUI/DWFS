@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     const type = {
         vf: "vf",
@@ -82,4 +83,55 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     console.log(htmlContent);
     container.innerHTML = htmlContent;
+
+    // display function 
+
+    var questionIndex = 0;
+
+    function displayQuestion() {
+        container.innerHTML = questions[questionIndex]._generateHTML();
+
+        // timer function
+        const tempsRestantDiv = document.getElementById('TempsRestant');
+        let timeRemaining = questions[questionIndex].duree;
+
+        function updateTempsRestant() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            tempsRestantDiv.textContent = `Temps restant :  ${seconds} seconds`;
+        }
+
+        function startTimer() {
+            updateTempsRestant();
+            const timerInterval = setInterval(function () {
+                timeRemaining--;
+                updateTempsRestant();
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    questionIndex++;
+
+                    // Check if there are more questions
+                    if (questionIndex < questions.length) {
+                        displayQuestion();
+                    } else {
+                        // All questions have been displayed
+                        container.innerHTML = "<p>Quiz finished!</p>";
+                    }
+                }
+            }, 1000);
+        }
+        
+        startTimer();
+    }
+
+    const startButton = document.getElementById('startButton');
+    console.log(startButton); 
+    startButton.addEventListener('click', function () {
+                    console.log('clicked start');
+                    document.getElementById('wrapper').style.display = 'block';
+                    displayQuestion()
+
+    });
 });
+
