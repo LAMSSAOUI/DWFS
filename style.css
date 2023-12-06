@@ -82,4 +82,7 @@ button:hover {
     border-radius: 100%;
     margin-bottom: 15px;
 
+} 
+#timeTrigger {
+    display: none;
 }
